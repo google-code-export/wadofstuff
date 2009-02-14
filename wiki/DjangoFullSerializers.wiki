@@ -4,7 +4,9 @@
 wadofstuff.django.serializers adds 3 new parameters.
 
 excludes - fields to be excluded from serialization.
+
 extras - non-model field properties or callables to be serialized.
+
 relations - model related fields to be followed and serialized.
 
 {{{
