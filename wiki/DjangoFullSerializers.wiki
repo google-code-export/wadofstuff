@@ -1,14 +1,22 @@
 #summary Example usage of full serializer.
 #labels Featured,Phase-Implementation
 
-wadofstuff.django.serializers adds 3 new parameters.
+<wiki:toc />
 
-excludes - fields to be excluded from serialization.
+=Introduction=
 
-extras - non-model field properties or callables to be serialized.
+The wadofstuff.django.serializers python modules adds 3 new parameters. The modules currently support serializing to JSON and Python only.
 
-relations - model related fields to be followed and serialized.
+  * excludes - fields to be excluded from serialization.
 
+  * extras - non-model field properties or callables to be serialized.
+
+  * relations - model related fields to be followed and serialized.
+
+
+=Examples=
+
+==Backwards Compatibility==
 {{{
 >>> from django.contrib.auth.models import Group
 >>> from django.core import serializers
@@ -25,6 +33,11 @@ relations - model related fields to be followed and serialized.
         }
     }
 ]
+}}}
+
+==Excludes==
+
+{{{
 >>> print serializers.serialize('json', Group.objects.all(), indent=4, excludes=('permissions',))
 [
     {
@@ -35,6 +48,43 @@ relations - model related fields to be followed and serialized.
         }
     }
 ]
+}}}
+
+==Extras==
+
+In this example I monkey patch the `Group` model to have a `get_absolute_url()` method to demonstrate the extras feature.
+
+{{{
+>>> def get_absolute_url(self):
+...     return u'/group/%s' % self.name
+...
+>>> Group.get_absolute_url = get_absolute_url
+>>> print serializers.serialize('json', Group.objects.all(), indent=4, extras=('__unicode__','get_absolute_url'))
+[
+    {
+        "pk": 2,
+        "model": "auth.group",
+        "extras": {
+            "get_absolute_url": "/group/session",
+            "__unicode__": "session"
+        },
+        "fields": {
+            "name": "session",
+            "permissions": [
+                19
+            ]
+        }
+    }
+]
+}}}
+
+==Relations==
+
+The wadofstuff serializers allow you to follow related fields of a model to any depth you wish and serialize those as well. This is why it is considered a "full serializer" as opposed to Django's built-in serializers that only provide the related fields primary key value.
+
+When using the relations argument to the serializer you may specify either a list of fields to be serialized or a dictionary of key/value pairs. The dictionary keys are the field names of related fields to be serialized and the values are the arguments to pass to the serializer when serializing that field.
+
+{{{
 >>> print serializers.serialize('json', Group.objects.all(), indent=4, relations=('permissions',))
 [
     {
@@ -56,6 +106,11 @@ relations - model related fields to be followed and serialized.
         }
     }
 ]
+}}}
+
+===Only serializing a particular field of a relation===
+
+{{{
 >>> print serializers.serialize('json', Group.objects.all(), indent=4, relations={'permissions':{'fields':('codename',)}})
 [
     {
@@ -75,6 +130,11 @@ relations - model related fields to be followed and serialized.
         }
     }
 ]
+}}}
+
+===Serializing a relation of a relation===
+
+{{{
 >>> print serializers.serialize('json', Group.objects.all(), indent=4, relations={'permissions':{'relations':('content_type',)}})
 [
     {
@@ -104,6 +164,11 @@ relations - model related fields to be followed and serialized.
         }
     }
 ]
+}}}
+
+===Excluding a field from a relation of a relation===
+
+{{{
 >>> print serializers.serialize('json', Group.objects.all(), indent=4, relations={'permissions':{'relations':{'content_type':{'excludes':('app_label',)}}}})
 [
     {
@@ -128,27 +193,6 @@ relations - model related fields to be followed and serialized.
                         }
                     }
                 }
-            ]
-        }
-    }
-]
->>> def get_absolute_url(self):
-...     return u'/group/%s' % self.name
-...
->>> Group.get_absolute_url = get_absolute_url
->>> print serializers.serialize('json', Group.objects.all(), indent=4, extras=('__unicode__','get_absolute_url'))
-[
-    {
-        "pk": 2,
-        "model": "auth.group",
-        "extras": {
-            "get_absolute_url": "/group/session",
-            "__unicode__": "session"
-        },
-        "fields": {
-            "name": "session",
-            "permissions": [
-                19
             ]
         }
     }
