@@ -1,6 +1,12 @@
 #summary Example usage of full serializer.
 #labels Featured,Phase-Implementation
 
+wadofstuff.django.serializers adds 3 new parameters.
+
+excludes - fields to be excluded from serialization.
+extras - non-model field properties or callables to be serialized.
+relations - model related fields to be followed and serialized.
+
 {{{
 >>> from django.contrib.auth.models import Group
 >>> from django.core import serializers
@@ -14,6 +20,16 @@
             "permissions": [
                 19
             ]
+        }
+    }
+]
+>>> print serializers.serialize('json', Group.objects.all(), indent=4, excludes=('permissions',))
+[
+    {
+        "pk": 2,
+        "model": "auth.group",
+        "fields": {
+            "name": "session"
         }
     }
 ]
@@ -114,5 +130,25 @@
         }
     }
 ]
-
+>>> def get_absolute_url(self):
+...     return u'/group/%s' % self.name
+...
+>>> Group.get_absolute_url = get_absolute_url
+>>> print serializers.serialize('json', Group.objects.all(), indent=4, extras=('__unicode__','get_absolute_url'))
+[
+    {
+        "pk": 2,
+        "model": "auth.group",
+        "extras": {
+            "get_absolute_url": "/group/session",
+            "__unicode__": "session"
+        },
+        "fields": {
+            "name": "session",
+            "permissions": [
+                19
+            ]
+        }
+    }
+]
 }}}
