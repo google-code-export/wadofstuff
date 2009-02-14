@@ -1,4 +1,4 @@
-#summary Documentation and examples for the Wad of stuff Django Full Serializers
+#summary Documentation and examples for the Wad of Stuff Django Full Serializers
 #labels Featured,Phase-Implementation
 
 <wiki:toc />
@@ -18,6 +18,16 @@ The wadofstuff.django.serializers python modules adds 3 new parameters. The modu
 [http://wadofstuff.googlecode.com/svn/trunk/python/django/serializers Django Full Serializers]
 
 =Examples=
+
+==Project Settings==
+
+You must add the following to your project's `settings.py` to be able to use the JSON serializer.
+
+{{{
+SERIALIZATION_MODULES = {
+    'json': 'wadofstuff.django.serializers.json'
+}
+}}}
 
 ==Backwards Compatibility==
 {{{
