@@ -5,15 +5,21 @@
 
 =Introduction=
 
-The wadofstuff.django.serializers python modules adds 3 new parameters. The modules currently support serializing to JSON and Python only.
+The wadofstuff.django.serializers python module extends Django's built-in serializers, adding 3 new capabilities. These parameters allow the developer more control over how their models are serialized. The additional capabilities are:
 
   * excludes - a list of fields to be excluded from serialization. The excludes list takes precedence over the fields argument.
 
-  * extras - a list of non-model field properties or callables to be serialized. Callables cannot be passed arguments.
+  * extras - a list of non-model field properties or callables to be serialized.
 
   * relations - a list or dictionary of model related fields to be followed and serialized.
 
+=Serialization Formats=
+
+The module currently support serializing to JSON and Python only.
+
 =Source=
+
+The source for the serialization module can be obtained here:
 
 [http://wadofstuff.googlecode.com/svn/trunk/python/django/serializers Django Full Serializers]
 
@@ -30,6 +36,9 @@ SERIALIZATION_MODULES = {
 }}}
 
 ==Backwards Compatibility==
+
+The Wad of Stuff serializers a 100% compatible with the Django serializers when serializing a model. When deserializing a data stream the the `Deserializer` class currently only works with serialized data returned by the standard Django serializers.
+
 {{{
 >>> from django.contrib.auth.models import Group
 >>> from django.core import serializers
@@ -65,7 +74,9 @@ SERIALIZATION_MODULES = {
 
 ==Extras==
 
-In this example I monkey patch the `Group` model to have a `get_absolute_url()` method to demonstrate the extras feature.
+The `extras` option allows the developer to serialize properties of a model that are not fields. These properties may be almost any standard python attribute or method. The only limitation being that you may only serialize methods that do not require any arguments.
+
+For demonstration purposes in this example I monkey patch the `Group` model to have a `get_absolute_url()` method.
 
 {{{
 >>> def get_absolute_url(self):
@@ -93,9 +104,9 @@ In this example I monkey patch the `Group` model to have a `get_absolute_url()` 
 
 ==Relations==
 
-The wadofstuff serializers allow you to follow related fields of a model to any depth you wish and serialize those as well. This is why it is considered a "full serializer" as opposed to Django's built-in serializers that only provide the related fields primary key value.
+The Wad of Stuff serializers allow you to follow related fields of a model to any depth you wish and serialize those as well. This is why it is considered a "full serializer" as opposed to Django's built-in serializers that only return the related fields primary key value.
 
-When using the relations argument to the serializer you may specify either a list of fields to be serialized or a dictionary of key/value pairs. The dictionary keys are the field names of related fields to be serialized and the values are the arguments to pass to the serializer when serializing that field.
+When using the `relations` argument to the serializer you may specify either a list of fields to be serialized or a dictionary of key/value pairs. The dictionary keys are the field names of the related fields to be serialized and the values are the arguments to pass to the serializer when processing that field.
 
 {{{
 >>> print serializers.serialize('json', Group.objects.all(), indent=4, relations=('permissions',))
