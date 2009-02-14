@@ -7,11 +7,11 @@
 
 The wadofstuff.django.serializers python modules adds 3 new parameters. The modules currently support serializing to JSON and Python only.
 
-  * excludes - fields to be excluded from serialization.
+  * excludes - a list of fields to be excluded from serialization. The excludes list takes precedence over the fields argument.
 
-  * extras - non-model field properties or callables to be serialized.
+  * extras - a list of non-model field properties or callables to be serialized. Callables cannot be passed arguments.
 
-  * relations - model related fields to be followed and serialized.
+  * relations - a list or dictionary of model related fields to be followed and serialized.
 
 
 =Examples=
