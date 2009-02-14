@@ -13,6 +13,9 @@ The wadofstuff.django.serializers python modules adds 3 new parameters. The modu
 
   * relations - a list or dictionary of model related fields to be followed and serialized.
 
+=Source=
+
+[http://wadofstuff.googlecode.com/svn/trunk/python/django/serializers Django Full Serializers]
 
 =Examples=
 
