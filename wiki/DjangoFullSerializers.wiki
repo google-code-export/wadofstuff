@@ -1,4 +1,4 @@
-#summary Example usage of full serializer.
+#summary Documentation and examples for the Wad of stuff Django Full Serializers
 #labels Featured,Phase-Implementation
 
 <wiki:toc />
