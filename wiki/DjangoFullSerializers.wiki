@@ -1,0 +1,118 @@
+#summary One-sentence summary of this page.
+#labels Featured,Phase-Implementation
+
+{{{
+>>> from django.contrib.auth.models import Group
+>>> from django.core import serializers
+>>> print serializers.serialize('json', Group.objects.all(), indent=4)
+[
+    {
+        "pk": 2,
+        "model": "auth.group",
+        "fields": {
+            "name": "session",
+            "permissions": [
+                19
+            ]
+        }
+    }
+]
+>>> print serializers.serialize('json', Group.objects.all(), indent=4, relations=('permissions',))
+[
+    {
+        "pk": 2,
+        "model": "auth.group",
+        "fields": {
+            "name": "session",
+            "permissions": [
+                {
+                    "pk": 19,
+                    "model": "auth.permission",
+                    "fields": {
+                        "codename": "add_session",
+                        "name": "Can add session",
+                        "content_type": 7
+                    }
+                }
+            ]
+        }
+    }
+]
+>>> print serializers.serialize('json', Group.objects.all(), indent=4, relations={'permissions':{'fields':('codename',)}})
+[
+    {
+        "pk": 2,
+        "model": "auth.group",
+        "fields": {
+            "name": "session",
+            "permissions": [
+                {
+                    "pk": 19,
+                    "model": "auth.permission",
+                    "fields": {
+                        "codename": "add_session"
+                    }
+                }
+            ]
+        }
+    }
+]
+>>> print serializers.serialize('json', Group.objects.all(), indent=4, relations={'permissions':{'relations':('content_type',)}})
+[
+    {
+        "pk": 2,
+        "model": "auth.group",
+        "fields": {
+            "name": "session",
+            "permissions": [
+                {
+                    "pk": 19,
+                    "model": "auth.permission",
+                    "fields": {
+                        "codename": "add_session",
+                        "name": "Can add session",
+                        "content_type": {
+                            "pk": 7,
+                            "model": "contenttypes.contenttype",
+                            "fields": {
+                                "model": "session",
+                                "name": "session",
+                                "app_label": "sessions"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+]
+>>> print serializers.serialize('json', Group.objects.all(), indent=4, relations={'permissions':{'relations':{'content_type':{'excludes':('app_label',)}}}})
+[
+    {
+        "pk": 2,
+        "model": "auth.group",
+        "fields": {
+            "name": "session",
+            "permissions": [
+                {
+                    "pk": 19,
+                    "model": "auth.permission",
+                    "fields": {
+                        "codename": "add_session",
+                        "name": "Can add session",
+                        "content_type": {
+                            "pk": 7,
+                            "model": "contenttypes.contenttype",
+                            "fields": {
+                                "model": "session",
+                                "name": "session"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
+]
+
+}}}
