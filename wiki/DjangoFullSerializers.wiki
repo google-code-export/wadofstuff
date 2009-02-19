@@ -21,7 +21,7 @@ The module currently support serializing to JSON and Python only.
 
 The source for the serialization module can be obtained here:
 
-[http://wadofstuff.googlecode.com/svn/trunk/python/django/serializers Django Full Serializers]
+[http://wadofstuff.googlecode.com/svn/trunk/python/wadofstuff Django Full Serializers]
 
 =Examples=
 
