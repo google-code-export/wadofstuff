@@ -37,7 +37,7 @@ SERIALIZATION_MODULES = {
 
 ==Backwards Compatibility==
 
-The Wad of Stuff serializers a 100% compatible with the Django serializers when serializing a model. When deserializing a data stream the the `Deserializer` class currently only works with serialized data returned by the standard Django serializers.
+The Wad of Stuff serializers are 100% compatible with the Django serializers when serializing a model. When deserializing a data stream the the `Deserializer` class currently only works with serialized data returned by the standard Django serializers.
 
 {{{
 >>> from django.contrib.auth.models import Group
