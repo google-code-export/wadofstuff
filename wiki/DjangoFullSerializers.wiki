@@ -19,9 +19,15 @@ The module currently support serializing to JSON and Python only.
 
 =Source=
 
-The source for the serialization module can be obtained here:
+The latest stable release for the serialization module can be obtained by:
 
-[http://wadofstuff.googlecode.com/svn/trunk/python/wadofstuff Django Full Serializers]
+  * Running `easy_install wadofstuff-django-serializers`
+
+  * Downloading [http://wadofstuff.googlecode.com/files/wadofstuff-django-serializers-1.0.0.tar.gz Wad of Stuff Django Serializers]
+
+The latest development source can be obtained here:
+
+  * [http://wadofstuff.googlecode.com/svn/trunk/python/serializers Wad of Stuff Django Serializers source]
 
 =Examples=
 
