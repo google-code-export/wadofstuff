@@ -1,5 +1,5 @@
 #summary Documentation and examples for the Wad of Stuff IP Summarization function
-#labels Phase-Implementation,Featured
+#labels Phase-Implementation,Featured,Phase-Deploy
 
 <wiki:toc />
 
@@ -18,7 +18,7 @@ http://pypi.python.org/pypi/IPy.
 
 ==From Source==
 
-Download wadofstuff-ip-x.x.x.tar.gz from http://code.google.com/p/wadofstuff/downloads/list.
+Download wadofstuff-ip from http://code.google.com/p/wadofstuff/downloads/list.
 
 To install it, run the following command inside the unpacked source directory:
 
