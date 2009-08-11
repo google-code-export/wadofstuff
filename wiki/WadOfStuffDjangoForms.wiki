@@ -11,7 +11,7 @@ Django 1.0 or newer.
 
 ==From Source==
 
-Download wadofstuff-forms from http://code.google.com/p/wadofstuff/downloads/list.
+Download wadofstuff-django-forms from http://code.google.com/p/wadofstuff/downloads/list.
 
 To install it, run the following command inside the unpacked source directory:
 
@@ -25,13 +25,13 @@ If you have the Python ``easy_install`` utility available, you can
 also type the following to download and install in one step:
 
 {{{
-easy_install wadofstuff-forms
+easy_install wadofstuff-django-forms
 }}}
 
 Or if you're using ``pip``:
 
 {{{
-pip install wadofstuff-forms
+pip install wadofstuff-django-forms
 }}}
 
 Or if you'd prefer you can simply place the included ``wadofstuff``
